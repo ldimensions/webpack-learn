@@ -3,13 +3,21 @@ const cleanWebpackPlugin = require('clean-webpack-plugin');
 const htmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-    entry: './src/index.js',
+    entry: {
+        'main': './src/index.js',
+        'about': './src/about.js'
+    },
     output: {
-        filename: 'bundle.js',
+        filename: '[name].js',
         path: path.resolve(__dirname,'./dist'),
         publicPath: '' // for file src location
     },
     mode: 'development',
+    devServer: {
+        contentBase: path.resolve(__dirname,'./dist'),
+        index: 'index.html',
+        port: 9000
+    },
     module: {
         rules: [
             {
