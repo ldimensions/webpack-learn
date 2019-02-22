@@ -1,17 +1,15 @@
 const path = require('path');
-const ugllifyJsPlugin = require('uglifyjs-webpack-plugin');
-const miniCssExtractPlugin = require('mini-css-extract-plugin');    // Plugin for seperate css file
 const cleanWebpackPlugin = require('clean-webpack-plugin');
 const htmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     entry: './src/index.js',
     output: {
-        filename: 'bundle.[hash].js',
+        filename: 'bundle.js',
         path: path.resolve(__dirname,'./dist'),
         publicPath: '' // for file src location
     },
-    mode: 'none',
+    mode: 'development',
     module: {
         rules: [
             {
@@ -23,13 +21,13 @@ module.exports = {
             {
                 test: /\.css$/,
                 use: [
-                    miniCssExtractPlugin.loader, 'css-loader'
+                    'style-loader', 'css-loader'
                 ]
             },
             {
                 test: /\.scss$/,
                 use: [
-                    miniCssExtractPlugin.loader, 'css-loader', 'sass-loader'
+                    'style-loader', 'css-loader', 'sass-loader'
                 ]
             },
             {
@@ -46,10 +44,6 @@ module.exports = {
         ]
     },
     plugins: [
-        new ugllifyJsPlugin(),
-        new miniCssExtractPlugin({
-            filename:'style.[contenthash].css'
-        }),
         new cleanWebpackPlugin('dist'), //(['dist', 'src/log'])
         new htmlWebpackPlugin()
     ]
